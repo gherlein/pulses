@@ -10,14 +10,19 @@ add_executable(main
     main.c
 )
 
+pico_add_extra_outputs(main)
 pico_enable_stdio_usb(main 0)
 pico_enable_stdio_uart(main 1)
 
-pico_add_extra_outputs(main)
+target_include_directories(main PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}
+)
 
 target_link_libraries(main 
     pico_stdlib
     pico_multicore
+    pico_cyw43_arch_lwip_threadsafe_background
+    pico_lwip_http
 )
 
 add_custom_target(flash
